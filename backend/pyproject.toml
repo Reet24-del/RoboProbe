@@ -79,6 +79,7 @@ dev = [
     "scipy-stubs>=1.14",
     "pyarrow-stubs>=17",
     "httpx2>=2.0",
+    "mutmut>=3.3",
 ]
 
 [project.scripts]
@@ -286,6 +287,31 @@ type = "forbidden"
 source_modules = ["roboprobe.runner", "roboprobe.experiments", "roboprobe.reporting"]
 forbidden_modules = ["roboprobe.bootstrap"]
 allow_indirect_imports = false
+
+# Weekly mutation testing (T-131, docs/18 §3). Runner matches the unit/property tier.
+[tool.mutmut]
+# Copy the whole tree so mutant runs can still import the rest of roboprobe.
+# only_mutate limits edits to the packages named in T-131 (mutmut 3.8 renamed
+# paths_to_mutate to source_paths; globs are one directory deep).
+source_paths = ["src"]
+also_copy = ["alembic.ini"]
+only_mutate = [
+    "src/roboprobe/selection/*.py",
+    "src/roboprobe/selection/*/*.py",
+    "src/roboprobe/selection/*/*/*.py",
+    "src/roboprobe/oracles/*.py",
+]
+# The event-catalogue test reads source text. mutmut inlines every mutant into
+# those files during the stats run, so the scan cannot pass and -x would abort.
+pytest_add_cli_args = [
+    "-x",
+    "-q",
+    "-m",
+    "unit or property",
+    "--tb=line",
+    "-k",
+    "not test_every_logged_event_is_in_the_catalogue",
+]
 
 [dependency-groups]
 dev = [

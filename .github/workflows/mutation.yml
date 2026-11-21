@@ -1,0 +1,55 @@
+# Weekly mutation test (T-131, docs/18 §3). Not a pull-request check: it never blocks merges.
+name: mutation
+
+on:
+  schedule:
+    - cron: "0 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mutation-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: "3.12"
+  ROBOPROBE_ENV: ci
+
+jobs:
+  mutmut:
+    name: mutmut
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/setup-backend
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Restore mutmut cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: backend/mutants
+          key: mutmut-${{ hashFiles('backend/uv.lock', 'backend/src/roboprobe/selection/**', 'backend/src/roboprobe/oracles/**') }}
+          restore-keys: mutmut-
+      - name: Run mutmut
+        run: |
+          python3 scripts/prepare_mutmut_layout.py
+          uv run --directory backend mutmut run
+      - name: Job summary
+        working-directory: backend
+        run: |
+          uv run mutmut export-cicd-stats
+          python3 ../scripts/mutation_summary.py mutants/mutmut-cicd-stats.json >> "$GITHUB_STEP_SUMMARY"
+      - name: HTML report
+        if: always()
+        working-directory: backend
+        run: python3 ../scripts/mutation_summary.py mutants/mutmut-cicd-stats.json --html mutmut-report.html
+      - name: Upload HTML report
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: mutmut-report
+          path: backend/mutmut-report.html
+          if-no-files-found: warn

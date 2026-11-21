@@ -18,6 +18,15 @@ venv/
 coverage.xml
 htmlcov/
 .benchmarks/
+backend/mutants/
+# Copies so mutmut's one-level-deeper tests still find repo data (T-131).
+/backend/configs
+/backend/schemas
+/backend/tasks
+/backend/scripts
+/backend/docs
+/backend/roboprobe.example.toml
+/backend/.env.example
 .ipynb_checkpoints/
 
 # --- Node / web ---

@@ -141,8 +141,14 @@ def _schema_file(name: str) -> Path:
     packaged = Path(str(resources.files("roboprobe"))) / "schemas" / filename
     if packaged.is_file():
         return packaged
-    # Source checkout: backend/src/roboprobe/scenario/_documents.py -> <repo>/schemas.
-    return Path(__file__).resolve().parents[4] / "schemas" / filename
+    # Source checkout, including mutmut's ``mutants/`` copy (one directory deeper
+    # than backend/src/roboprobe/scenario/_documents.py).
+    here = Path(__file__).resolve()
+    for parent in here.parents:
+        candidate = parent / "schemas" / filename
+        if candidate.is_file():
+            return candidate
+    return here.parents[4] / "schemas" / filename
 
 
 def json_pointer(path: Iterable[str | int]) -> str:

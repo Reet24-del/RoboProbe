@@ -41,7 +41,7 @@
 | NFR-SCAL-001/002 | 04 §7, 29 §5 | load test, remote-worker manual test | release |
 | NFR-REL-001/002 | 05 §5, 14 §5 | chaos tests | PR |
 | NFR-REP-001/002 | 21 §2–4 | replay tests, EXP-06 | PR / release |
-| NFR-MNT-001/002 | 16, 34 | coverage, ruff D rules, mypy | PR |
+| NFR-MNT-001/002 | 16, 34 | coverage, ruff D rules, mypy, weekly mutmut (T-131) | PR |
 | NFR-EXT-001…003 | 34 §3 | contract suites, import-linter | PR |
 | NFR-CFG-001…003 | 27 | config tests, PLR2004, drift check | PR |
 | NFR-DEP-001…003 | 17, 20, 29 | compose smoke, image build | PR / main |

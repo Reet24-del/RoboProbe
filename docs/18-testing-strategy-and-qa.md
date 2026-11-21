@@ -41,7 +41,7 @@ Pytest markers: `unit`, `property`, `contract`, `integration`, `benchmark`, `sim
 
 - Line coverage ≥ **85 %** for `roboprobe` (excluding `backends/gazebo_nav2` which is covered by sim tests), branch coverage ≥ 75 %; web ≥ 70 %.
 - Domain packages (`scenario, selection, oracles, analysis, risk, metrics`) ≥ **90 %**.
-- Mutation testing (`mutmut`) on `oracles/` and `metrics/` monthly; surviving mutants reviewed.
+- Mutation testing (`mutmut`) on `selection/` and `oracles/` weekly (`.github/workflows/mutation.yml`, T-131); surviving mutants reviewed. The job is not a pull-request check.
 - mypy strict, ruff, import-linter, ESLint must pass (0 warnings policy).
 
 ## 4. What is tested, by module
