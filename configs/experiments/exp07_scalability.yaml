@@ -1,0 +1,27 @@
+# probe_preregistration_sha256: b8ca9726980b573da4496b9ba8033d96ee8da63e986354368a23a63a7b3cbc51
+# docs/19 section 4 EXP-07. d=6 RANDOM vs PROBE.
+schema_version: 1
+id: exp07_scalability
+name: d=6 RANDOM vs PROBE
+description: Scalability arm (docs/19 section 4 EXP-07). Strategies RANDOM and PROBE,
+  30 seeds, budget 300. Alpha 0.05.
+backend: kinematic2d
+space:
+  id: warehouse_v1
+sut_profile_id: k2d_default
+strategies:
+- id: S-RANDOM
+- id: S-PROBE
+  params:
+    epsilon: 0.05
+seeds:
+  root: 20261119
+  count: 30
+budget: 300
+batch_size: 4
+metrics:
+- MET-02
+- MET-03
+- MET-09
+tags:
+- scalability

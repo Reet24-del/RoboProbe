@@ -1,0 +1,101 @@
+# Variant of warehouse_v1 (docs/19 §4). Schema: schemas/scenario_space.schema.json.
+schema_version: 1
+id: warehouse_v1_d8
+name: Warehouse delivery - d=8 (along-path and lidar dropout enabled)
+description: 'TurtleBot 4 delivers from Dock A to Station B; a low pallet is injected
+  near the nominal path.
+
+  '
+task: tasks/warehouse_delivery_v1.yaml
+parameters:
+- id: robot.max_speed
+  name: Max linear speed
+  group: robot
+  type: float
+  unit: m/s
+  low: 0.1
+  high: 0.5
+  nominal: 0.26
+  prior:
+    kind: uniform
+  enabled: true
+- id: obstacle.clearance
+  name: Obstacle lateral clearance
+  group: task
+  type: float
+  unit: m
+  low: 0.0
+  high: 1.2
+  nominal: 0.8
+  prior:
+    kind: uniform
+  enabled: true
+- id: env.illuminance
+  name: Ambient illuminance
+  group: environment
+  type: float
+  unit: lux
+  low: 5
+  high: 1000
+  nominal: 300
+  scale: log
+  prior:
+    kind: loguniform
+  enabled: true
+- id: sensor.lidar_noise_std
+  name: Lidar range noise (std)
+  group: sensor
+  type: float
+  unit: m
+  low: 0.0
+  high: 0.1
+  nominal: 0.01
+  prior:
+    kind: uniform
+  enabled: true
+- id: env.floor_friction
+  name: Floor friction coefficient
+  group: environment
+  type: float
+  unit: '-'
+  low: 0.1
+  high: 1.0
+  nominal: 0.8
+  prior:
+    kind: uniform
+  enabled: true
+- id: comms.cmd_delay_ms
+  name: Command delay
+  group: comms
+  type: float
+  unit: ms
+  low: 0
+  high: 400
+  nominal: 20
+  prior:
+    kind: uniform
+  enabled: true
+- id: obstacle.along_path
+  name: Obstacle position along path
+  group: task
+  type: float
+  unit: '-'
+  low: 0.2
+  high: 0.8
+  nominal: 0.5
+  prior:
+    kind: uniform
+  enabled: true
+- id: sensor.lidar_dropout
+  name: Lidar beam dropout probability
+  group: sensor
+  type: float
+  unit: probability
+  low: 0.0
+  high: 0.3
+  nominal: 0.0
+  prior:
+    kind: uniform
+  enabled: true
+constraints: []
+oracle_thresholds: default

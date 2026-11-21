@@ -1,0 +1,31 @@
+# probe_preregistration_sha256: b8ca9726980b573da4496b9ba8033d96ee8da63e986354368a23a63a7b3cbc51
+# docs/19 section 4 EXP-05. 2 profiles x 3 seeds x budget 80.
+schema_version: 1
+id: exp05_profiles
+name: profile A vs profile B (H6)
+description: Hypothesis H6. Primary metric MET-07. Alpha 0.05. Schema v1 has one sut_profile_id,
+  so both arms stamp tb4_nav2_default (profile A). Profile B (tb4_nav2_tuned) is applied
+  when that profile exists after EXP-04; the label records the arm.
+backend: gazebo_nav2
+space:
+  id: warehouse_v1
+sut_profile_id: tb4_nav2_default
+strategies:
+- id: S-PROBE
+  label: profile_A
+  params:
+    epsilon: 0.05
+- id: S-PROBE
+  label: profile_B
+  params:
+    epsilon: 0.05
+seeds:
+  root: 20261119
+  count: 3
+budget: 80
+batch_size: 1
+metrics:
+- MET-06
+- MET-07
+tags:
+- H6

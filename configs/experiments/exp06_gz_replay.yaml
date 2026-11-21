@@ -1,0 +1,26 @@
+# probe_preregistration_sha256: b8ca9726980b573da4496b9ba8033d96ee8da63e986354368a23a63a7b3cbc51
+# docs/19 section 4 EXP-06. Replay of EXP-04 medoids x 5. Resolved at run time.
+schema_version: 1
+id: exp06_gz_replay
+name: Gazebo replay of EXP-04 medoids (H6)
+description: 'Hypothesis H6. Primary metric MET-06. Replay plan: each EXP-04 failure-mode
+  medoid is replayed 5 times (seeds.count) on gazebo_nav2. Medoid scenarios are resolved
+  from EXP-04 outputs at run time. budget 1 is one replay execution per cell.'
+backend: gazebo_nav2
+space:
+  id: warehouse_v1
+sut_profile_id: tb4_nav2_default
+strategies:
+- id: S-RANDOM
+  label: replay-medoid
+seeds:
+  root: 20261119
+  count: 5
+budget: 1
+batch_size: 1
+metrics:
+- MET-06
+tags:
+- H6
+- replay
+- exp04

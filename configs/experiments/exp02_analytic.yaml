@@ -1,0 +1,35 @@
+# probe_preregistration_sha256: b8ca9726980b573da4496b9ba8033d96ee8da63e986354368a23a63a7b3cbc51
+# docs/19 section 4 EXP-02 multi_mode_6d. 8 strategies x 50 seeds x budget 150.
+schema_version: 1
+id: exp02_analytic
+name: analytic multi_mode_6d (H1-H2)
+description: Hypotheses H1-H2. Primary metric MET-03. Alpha 0.05. Paired branin_falsify
+  arm is exp02_branin.yaml (schema v1 holds one space).
+backend: benchmark
+space:
+  id: multi_mode_6d
+sut_profile_id: k2d_default
+strategies:
+- id: S-RANDOM
+- id: S-LHS
+- id: S-SOBOL
+- id: S-OFAT
+- id: S-GRID
+- id: S-BO
+- id: S-LSE
+- id: S-PROBE
+  params:
+    epsilon: 0.05
+seeds:
+  root: 20261119
+  count: 50
+budget: 150
+batch_size: 4
+metrics:
+- MET-01
+- MET-02
+- MET-03
+- MET-09
+tags:
+- H1
+- H2

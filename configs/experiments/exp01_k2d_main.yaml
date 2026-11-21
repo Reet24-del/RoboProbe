@@ -1,0 +1,39 @@
+# probe_preregistration_sha256: b8ca9726980b573da4496b9ba8033d96ee8da63e986354368a23a63a7b3cbc51
+# docs/19 section 4 EXP-01. 8 strategies x 30 seeds x budget 200.
+schema_version: 1
+id: exp01_k2d_main
+name: kinematic2d main comparison (H1-H4)
+description: Hypotheses H1-H4. Primary metric MET-03. Alpha 0.05. The held-out d=8
+  arm is EXP-07 (docs/19 section 8). S-CEM is optional and not in the 8-strategy count.
+backend: kinematic2d
+space:
+  id: warehouse_v1
+sut_profile_id: k2d_default
+strategies:
+- id: S-RANDOM
+- id: S-LHS
+- id: S-SOBOL
+- id: S-OFAT
+- id: S-GRID
+- id: S-BO
+- id: S-LSE
+- id: S-PROBE
+  params:
+    epsilon: 0.05
+seeds:
+  root: 20261119
+  count: 30
+budget: 200
+batch_size: 4
+metrics:
+- MET-01
+- MET-02
+- MET-03
+- MET-04
+- MET-08
+- MET-09
+tags:
+- H1
+- H2
+- H3
+- H4

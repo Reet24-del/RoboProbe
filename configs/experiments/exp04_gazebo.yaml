@@ -1,0 +1,30 @@
+# probe_preregistration_sha256: b8ca9726980b573da4496b9ba8033d96ee8da63e986354368a23a63a7b3cbc51
+# docs/19 section 4 EXP-04. 10 campaigns x budget 80.
+schema_version: 1
+id: exp04_gazebo
+name: Gazebo RANDOM vs PROBE (H1-H3)
+description: Hypotheses H1-H3. Primary metric MET-03. Alpha 0.05. Doc 19's extra OFAT
+  campaign (once, 30 runs) uses a different budget than this matrix; schema v1 has
+  one budget, so OFAT is not a third arm. 2 strategies x 5 seeds = 10 campaigns.
+backend: gazebo_nav2
+space:
+  id: warehouse_v1
+sut_profile_id: tb4_nav2_default
+strategies:
+- id: S-RANDOM
+- id: S-PROBE
+  params:
+    epsilon: 0.05
+seeds:
+  root: 20261119
+  count: 5
+budget: 80
+batch_size: 1
+metrics:
+- MET-01
+- MET-02
+- MET-03
+tags:
+- H1
+- H2
+- H3
